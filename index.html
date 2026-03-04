@@ -10,7 +10,7 @@
 
 <body>
 
-<div class="phone">
+<div class="phone index-page">
     <div class="header">
         <div class="header-left">
             <img src="epslogodarkmode.svg" alt="ePS" class="header-logo" id="headerLogo">
@@ -18,7 +18,7 @@
         <div class="header-center">
             <div class="greeting" id="greetingText">Hello</div>
         </div>
-        <div>
+        <div class="header-right">
             <div class="avatar" id="userAvatar"><span id="userAvatarText">?</span></div>
             <div class="profile-menu" id="profileMenu">
                 <div class="profile-menu-header">
@@ -407,8 +407,8 @@
 let currentMonth = new Date();
 const deliveries = {};
 
-// Translation support - GLOBAL so all functions can access it
-const translations = {
+// Translation support - Use global from language.js
+const translations = window.i18n ? window.i18n.translations : {
     en: {
         pleaseFillAllFields: 'Please fill in all fields',
         storeSavedSuccess: 'Store saved successfully!',
@@ -2686,6 +2686,7 @@ function setupGPSEventListeners() {
         if (gpsSection.style.display === 'none') {
             // Show GPS section
             gpsSection.style.display = 'flex';
+            document.querySelector('.phone').classList.add('gps-active');
             toggleGpsBtn.classList.add('active');
             
             try {
@@ -2707,6 +2708,7 @@ function setupGPSEventListeners() {
         } else {
             // Hide GPS section
             gpsSection.style.display = 'none';
+            document.querySelector('.phone').classList.remove('gps-active');
             toggleGpsBtn.classList.remove('active');
             if (gpsTracker) {
                 gpsTracker.stopTracking();
@@ -2717,6 +2719,7 @@ function setupGPSEventListeners() {
     // Close GPS section
     closeGpsBtn.addEventListener('click', () => {
         gpsSection.style.display = 'none';
+        document.querySelector('.phone').classList.remove('gps-active');
         toggleGpsBtn.classList.remove('active');
         if (gpsTracker) {
             gpsTracker.stopTracking();
